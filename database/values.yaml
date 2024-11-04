@@ -1,0 +1,13 @@
+---
+primary:
+  resourcesPreset: "2xlarge"
+  persistence:
+    size: 1000Gi
+
+auth:
+  username: airflow_user
+  existingSecret: pg-airflow-user
+  database: airflow_db
+
+metrics:
+  enabled: true

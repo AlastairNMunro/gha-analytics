@@ -1,0 +1,36 @@
+---
+postgresql:
+  enabled: false
+
+externalDatabase:
+  type: postgres
+  host: analytics-postgresql.database.svc.cluster.local
+  port: 5432
+  database: airflow_db
+  user: airflow_user
+  existingSecret: pg-airflow-user
+
+extraEnvVars:
+  - name: AIRFLOW_CONN_ANALYTICS_DB
+    value: "postgresql://airflow_user:airflow@analytics-postgresql.database.svc.cluster.local:5432/airflow_db"
+
+dags:
+  existingConfigmap: "airflow-dags"
+
+worker:
+  resourcesPreset: "2xlarge"
+
+metrics:
+  serviceMonitor:
+    enable: true
+    namespace: monitoring
+    interval: 1m
+    scrapeTimeout: 10s
+
+airflow:
+  web:
+    annotations:
+      checksum/config: "{{ .Release.Time }}"
+  scheduler:
+    annotations:
+      checksum/config: "{{ .Release.Time }}"

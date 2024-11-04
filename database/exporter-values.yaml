@@ -1,0 +1,9 @@
+---
+config:
+  datasource:
+    host: analytics-postgresql.database.svc.cluster.local
+    user: postgres
+    userSecret:
+      name: analytics-postgresql
+      key: postgres-password
+    database: airflow_db

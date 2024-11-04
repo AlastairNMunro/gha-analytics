@@ -1,0 +1,44 @@
+---
+persistence:
+  type: pvc
+  enabled: true
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://analytics-prometheus-server.monitoring.svc.cluster.local:80
+        isDefault: true
+        version: 1
+        editable: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: 'default'
+      type: file
+      disableDeletion: true
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/standard
+
+dashboards:
+  default:
+    kubernetes-cluster-monitoring:
+      gnetId: 10856
+      datasource: Prometheus
+      revision: 1
+      uid: kubernetes-cluster-monitoring
+      title: "Kubernetes Cluster Monitoring"
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    folder: /var/lib/grafana/dashboards/default
