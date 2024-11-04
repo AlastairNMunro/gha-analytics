@@ -89,8 +89,8 @@ with DAG(
         task_id='hwm_task',
         python_callable=_get_hwm,
         op_kwargs={
-            'table_name': 'raw_json',                             # Target table name in PostgreSQL
-            'postgres_conn_id': 'analytics_db',                     # Connection ID for PostgreSQL
+            'table_name': 'raw_json',
+            'postgres_conn_id': 'analytics_db', 
         }
     )
     
